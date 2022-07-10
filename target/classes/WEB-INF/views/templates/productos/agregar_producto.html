@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master}">
+<body>
+<main layout:fragment="contenido">
+    <div class="col-12">
+        <h2>Agregar producto</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+        <form th:object="${producto}" th:action="@{/productos/agregar}" method="post">
+            <div class="form-group">
+                <label for="descripcion">Descripcion del producto</label>
+                <input autocomplete="off" autofocus th:field="*{descripcion}" id="descripcion"
+                       placeholder="Escribe la descripción del producto" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{descripcion}"></div>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input autocomplete="off" th:field="*{precio}" id="precio" placeholder="Precio del producto"
+                       type="number"
+                       step="0.01"
+                       class="form-control" th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{precio}"></div>
+
+            </div>
+            <button class="btn btn-success" type="submit">Guardar</button>
+            &nbsp;<a class="btn btn-warning" th:href="@{/productos/mostrar}">Ver todos</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>
